@@ -124,18 +124,32 @@ Episodes terminate when:
 
 ---
 
+### 2.6 Stochasticity and Model Learning Motivation
+
+The transition dynamics are stochastic due to wheel slip in the motion model, and observations are corrupted by LiDAR measurement noise. Although the environment is fully implemented, the agent does not have direct access to the true transition probabilities or reward structure. Instead, it must learn these properties through interaction.
+
+This formulation enables future extensions toward model-based reinforcement learning, where the agent may explicitly estimate or approximate the transition function \( P(s'|s,a) \) and reward function \( R(s,a) \) from experience.
+
 ## 3. Extended Kalman Filter (EKF)
 
-The EKF estimates robot pose using:
+Because the robot operates under motion and sensing uncertainty, state estimation is performed using an Extended Kalman Filter (EKF).
 
-### Prediction:
-- Differential-drive motion model
-- Wheel encoder inputs
+The EKF maintains a Gaussian belief over the robot pose:
 
-### Correction:
-- LiDAR-based geometric observations
+\[
+\hat{x}_t = (\hat{x}, \hat{y}, \hat{\theta})
+\]
 
-The RL agent receives the EKF estimated pose rather than ground-truth state, making the environment partially observable.
+Prediction step:
+- Uses nonlinear differential-drive kinematics
+- Propagates covariance using Jacobians of the motion model
+- Incorporates wheel slip as process noise
+
+Correction step:
+- Incorporates LiDAR-derived geometric measurements
+- Updates pose estimate using measurement residuals and Kalman gain
+
+The reinforcement learning agent receives the EKF-estimated pose rather than ground-truth state, making the task partially observable and more representative of real robotic systems.
 
 ---
 
