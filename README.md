@@ -195,7 +195,12 @@ class BaseAgent:
     def select_action(self, state):
         pass
 
+---
+
 ## Running (Version 1)
+
+From the project root directory:
+
 ```bash
 pip install -r requirements.txt
 python -m src.main --algo value_iteration
