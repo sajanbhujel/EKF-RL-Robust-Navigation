@@ -13,11 +13,12 @@ To simulate realistic robotics conditions:
 - LiDAR measurements are corrupted with Gaussian noise  
 - An Extended Kalman Filter (EKF) is used for state estimation  
 
-The objective is to learn a navigation policy that safely reaches a randomly generated goal while avoiding randomly generated circular obstacles.
+The objective is to learn a navigation policy that safely reaches a goal while avoiding obstacles.
 
 ---
 
 ## 2. Markov Decision Process (MDP) Formulation
+
 
 The navigation task is modeled as a Markov Decision Process (MDP):
 
@@ -193,3 +194,9 @@ class BaseAgent:
 
     def select_action(self, state):
         pass
+
+## Running (Version 1)
+```bash
+pip install -r requirements.txt
+python -m src.main --algo value_iteration
+python -m src.main --algo policy_iteration
